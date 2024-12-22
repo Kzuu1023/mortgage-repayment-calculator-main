@@ -64,7 +64,6 @@ form input {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    gap: 12rem;
 }
 
 .mortgage__form form {
@@ -83,7 +82,7 @@ form .header {
 }
 
 .mortgage__first-row {
-    width: 32%;
+    position: relative;
 }
 
 .mortgage__calculator .mortgage__amount,
@@ -131,13 +130,12 @@ form .header {
     content: "years";
     position: absolute;
     height: 39px;
-    left: 66%;
+    left: 65%;
     top: 30px;
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-400);
     color: var(--slate-700);
     background-color: var(--slate-100);
-
     padding-block: 0.5rem;
     padding-inline: 0.5rem;
     border-radius: 0 0.25rem 0.25rem 0;
@@ -200,41 +198,36 @@ form .header {
 }
 
 .mortgage__second-row {
-    position: relative;
+    max-width: 32%;
+    display: flex;
+    text-align: center;
+    background-color: var(--white);
 }
 
 .mortgage__second-row .second__row-items {
     display: flex;
-    position: absolute;
     flex-direction: column;
     align-items: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding-block: 9.1rem;
-    padding-inline: 6rem;
     background-color: var(--slate-900);
-    border-radius: 0 1.5rem 1.5rem 5.5rem;
+    border-radius: 0rem 1rem 1rem 4rem;
+    justify-content: center;
+    padding: 1rem;
 }
 
-.second__row-items .description h2 {
-    text-wrap: nowrap;
-    margin-bottom: 1rem;
-}
-
-.second__row-items .description p {
-    width: 100%;
+.second__row-items .description {
     text-align: center;
-    font-size: var(--font-size-100);
 }
 
-.second__row-items h2 {
+.description h2 {
+    margin-bottom: 1rem;
     color: var(--white);
 }
 
-.second__row-items p {
+.description p {
+    font-size: var(--font-size-200);
     color: var(--slate-300);
 }
+
 .attribution {
     font-size: 11px;
     text-align: center;
