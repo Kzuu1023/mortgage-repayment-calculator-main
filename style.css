@@ -56,17 +56,17 @@ form input {
     margin-bottom: 0.2rem;
 }
 
-.mortgage__calculator {
-    width: 100%;
-    display: flex;
-    place-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.viewport {
+    max-width: 100%;
 }
 
-.mortgage__form form {
+.mortgage__calculator {
+    max-width: 100%;
+    display: flex;
+    margin-top: 6rem;
+}
+
+.mortgage__card form {
     display: flex;
     flex-direction: column;
     background-color: var(--white);
@@ -80,9 +80,8 @@ form .header {
     align-items: center;
     justify-content: space-between;
 }
-
 .mortgage__first-row {
-    position: relative;
+    margin: auto;
 }
 
 .mortgage__calculator .mortgage__amount,
@@ -91,32 +90,44 @@ form .header {
 }
 
 .mortgage__amount {
-    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
-.mortgage__amount::before {
-    content: "£";
-    position: absolute;
-    height: 39px;
-    left: 0.2%;
-    top: 30px;
-    color: var(--slate-700);
+.mortgage__amount input {
+    border: 1px solid var(--white);
+}
+
+.mortgage__amount .amount__currency {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    border: 1px solid var(--slate-700);
+    border-radius: 0.25rem;
+}
+
+.amount__currency label {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 0;
+}
+
+.amount__currency .currency__symbol {
+    padding: 0.9rem;
     background-color: var(--slate-100);
-    font-weight: var(--font-weight-bold);
-    padding-block: 0.6rem;
-    padding-inline: 0.8rem;
-    border-radius: 0.25rem 0 0 0.25rem;
-    pointer-events: none;
+    border-radius: 0.25rem 0rem 0rem 0.25rem;
 }
 
-.mortgage__calculator .mortgage__group-input-container {
+.mortgage__calculator .mortgage {
     width: 100%;
     display: flex;
     gap: 1rem;
 }
 
-.mortgage__group-input-container .mortgage__term input,
-.mortgage__group-input-container .interest__rate input {
+.mortgage .mortgage__term input,
+.mortgage .interest__rate input {
     width: 100%;
 }
 
@@ -126,40 +137,7 @@ form .header {
     position: relative;
 }
 
-.mortgage__term::before {
-    content: "years";
-    position: absolute;
-    height: 39px;
-    left: 65%;
-    top: 30px;
-    font-weight: var(--font-weight-bold);
-    font-size: var(--font-size-400);
-    color: var(--slate-700);
-    background-color: var(--slate-100);
-    padding-block: 0.5rem;
-    padding-inline: 0.5rem;
-    border-radius: 0 0.25rem 0.25rem 0;
-    pointer-events: none;
-}
-
-.interest__rate::before {
-    content: "%";
-    position: absolute;
-    height: 39px;
-    left: 81%;
-    top: 30px;
-    font-weight: var(--font-weight-bold);
-    font-size: var(--font-size-400);
-    color: var(--slate-700);
-    background-color: var(--slate-100);
-    padding-block: 0.5rem;
-    padding-inline: 0.5rem;
-    border-radius: 0 0.25rem 0.25rem 0;
-    pointer-events: none;
-}
-
 .mortgage__type .mortgage__option {
-    position: relative;
     display: flex;
     align-items: center;
     padding-inline: 1rem;
@@ -178,8 +156,7 @@ form .header {
     margin-bottom: 0.3rem;
 }
 
-.mortgage__form .submit__container {
-    width: 70%;
+.mortgage__card .submit__container {
     display: flex;
     justify-content: center;
 }

@@ -18,7 +18,7 @@
         <main class="viewport">
             <section class="mortgage__calculator">
                 <div class="mortgage__first-row">
-                    <div class="mortgage__form">
+                    <div class="mortgage__card">
                         <form id="form" action="#" method="POST">
                             <div class="header">
                                 <h1>Mortgage Calculator</h1>
@@ -26,11 +26,19 @@
                             </div>
                             <div class="mortgage__amount">
                                 <label for="amount">Mortgage Amount</label>
-
-                                <input type="text" name="amount" id="amount" />
+                                <div class="amount__currency">
+                                    <input
+                                        type="text"
+                                        name="amount"
+                                        id="amount"
+                                    />
+                                    <div class="currency__symbol">
+                                        <label for="currency">£</label>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="mortgage__group-input-container">
+                            <div class="mortgage">
                                 <div class="mortgage__term">
                                     <label for="term">Mortgage Term</label>
                                     <input type="text" name="term" id="term" />
@@ -85,7 +93,7 @@
                     </div>
                 </div>
 
-                <div class="mortgage__second-row">
+                <!-- <div class="mortgage__second-row">
                     <div class="second__row-items">
                         <div class="img__container">
                             <svg
@@ -286,7 +294,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </section>
         </main>
         <!--  Clear All Mortgage Amount Mortgage Term Interest
