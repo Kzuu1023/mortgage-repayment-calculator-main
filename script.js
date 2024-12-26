@@ -1,25 +1,29 @@
-const mortgageAmount = document.querySelector(".amount");
-const termYears = document.querySelector(".term");
-const interestRate = document.querySelector(".rate");
+const mortgageAmount = document.getElementById("amount");
+const termYears = document.getElementById("term");
+const interestRate = document.getElementById("rate");
 const mortgageType = document.querySelectorAll("input[name='mortgage__type']");
+const errorMsg = document.querySelectorAll(".error");
 const form = document.getElementById("form");
 
 const setError = (input) => {
-    const errorMsg = input.parentElement.querySelector(".error");
-
-    if (errorMsg) {
-        errorMsg.textContent = "This field is required";
-        errorMsg.parentElement.style.color = "var(--red)";
-    }
+    errorMsg.forEach((error) => {
+        error.textContent = "This field is required";
+        error.style.color = "var(--red)";
+    });
 
     input.parentElement.classList.add("invalid");
     input.parentElement.classList.remove("valid");
-    input.style.borderColor = "var(--red)";
+    input.parentElement.style.borderColor = "var(--red)";
 };
 
 const setSuccess = (input) => {
+    errorMsg.forEach((error) => {
+        error.textContent = "";
+        error.style.color = "";
+    });
     input.parentElement.classList.add("valid");
     input.parentElement.classList.remove("invalid");
+    input.parentElement.style.borderColor = "";
 };
 
 const isValidMortgageType = () => {
