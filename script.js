@@ -7,6 +7,11 @@ const form = document.getElementById("form");
 const setError = (input) => {
     const errorMsg = input.parentElement.querySelector(".error");
 
+    if (errorMsg) {
+        errorMsg.textContent = "This field is required";
+        errorMsg.parentElement.style.color = "var(--red)";
+    }
+
     input.parentElement.classList.add("invalid");
     input.parentElement.classList.remove("valid");
     input.style.borderColor = "var(--red)";
@@ -34,7 +39,25 @@ form.addEventListener("click", function (e) {
 
     if (mortgageAmount.value) {
         setSuccess(mortgageAmount);
+        isValid = true;
     } else {
         setError(mortgageAmount);
+        isValid = false;
+    }
+
+    if (termYears.value) {
+        setSuccess(termYears);
+        isValid = true;
+    } else {
+        setError(termYears);
+        isValid = false;
+    }
+
+    if (interestRate.value) {
+        setSuccess(interestRate);
+        isValid = true;
+    } else {
+        setError(interestRate);
+        isValid = false;
     }
 });
