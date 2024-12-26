@@ -133,6 +133,12 @@ form .header {
     width: 100%;
 }
 
+.amount__currency:hover,
+.term__years:hover,
+.rate__symbol:hover {
+    border-color: var(--slate-900);
+}
+
 .mortgage__term .term__years,
 .mortgage__interest-rate .interest__rate-currency {
     display: flex;
@@ -155,6 +161,10 @@ form .header {
     border: 1px solid var(--slate-700);
     border-radius: 0.25rem;
     gap: 1rem;
+}
+
+.mortgage__option:hover {
+    border-color: var(--lime);
 }
 
 .term__years label,
@@ -189,6 +199,10 @@ form .header {
     border-radius: 2rem;
     gap: 0.6rem;
 }
+
+/* .submit__container button:hover {
+    background-color: var(--lime);
+} */
 
 .mortgage__second-row {
     width: 50%;
