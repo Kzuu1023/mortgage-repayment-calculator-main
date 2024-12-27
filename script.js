@@ -2,28 +2,30 @@ const mortgageAmount = document.getElementById("amount");
 const termYears = document.getElementById("term");
 const interestRate = document.getElementById("rate");
 const mortgageType = document.querySelectorAll("input[name='mortgage__type']");
-const errorMsg = document.querySelectorAll(".error");
 const form = document.getElementById("form");
 
-const setError = (input) => {
-    errorMsg.forEach((error) => {
-        error.textContent = "This field is required";
-        error.style.color = "var(--red)";
-    });
+const setError = (input, message) => {
+    const errorMsg = input.parentElement.nextElementSibling;
 
-    input.parentElement.classList.add("invalid");
-    input.parentElement.classList.remove("valid");
-    input.parentElement.style.borderColor = "var(--red)";
+    if (!input.value) {
+        errorMsg.textContent = message;
+        errorMsg.style.color = "var(--red)";
+        input.parentElement.classList.add("invalid");
+        input.parentElement.classList.remove("valid");
+        input.parentElement.style.borderColor = "var(--red)";
+    }
 };
 
 const setSuccess = (input) => {
-    errorMsg.forEach((error) => {
-        error.textContent = "";
-        error.style.color = "";
-    });
-    input.parentElement.classList.add("valid");
-    input.parentElement.classList.remove("invalid");
-    input.parentElement.style.borderColor = "";
+    const errorMsg = input.parentElement.nextElementSibling;
+
+    if (errorMsg) {
+        errorMsg.textContent = "";
+        errorMsg.style.color = "";
+        input.parentElement.classList.add("valid");
+        input.parentElement.classList.remove("invalid");
+        input.parentElement.style.borderColor = "";
+    }
 };
 
 const isValidMortgageType = () => {
@@ -45,7 +47,7 @@ form.addEventListener("click", function (e) {
         setSuccess(mortgageAmount);
         isValid = true;
     } else {
-        setError(mortgageAmount);
+        setError(mortgageAmount, "This field is required");
         isValid = false;
     }
 
@@ -53,7 +55,7 @@ form.addEventListener("click", function (e) {
         setSuccess(termYears);
         isValid = true;
     } else {
-        setError(termYears);
+        setError(termYears, "This field is required");
         isValid = false;
     }
 
@@ -61,7 +63,7 @@ form.addEventListener("click", function (e) {
         setSuccess(interestRate);
         isValid = true;
     } else {
-        setError(interestRate);
+        setError(interestRate, "This field is required");
         isValid = false;
     }
 });
