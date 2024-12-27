@@ -2,6 +2,7 @@ const mortgageAmount = document.getElementById("amount");
 const termYears = document.getElementById("term");
 const interestRate = document.getElementById("rate");
 const mortgageType = document.querySelectorAll("input[name='mortgage__type']");
+
 const form = document.getElementById("form");
 
 const setError = (input, message) => {
@@ -18,8 +19,7 @@ const setError = (input, message) => {
 
 const setSuccess = (input) => {
     const errorMsg = input.parentElement.nextElementSibling;
-
-    if (errorMsg) {
+    if (input.value) {
         errorMsg.textContent = "";
         errorMsg.style.color = "";
         input.parentElement.classList.add("valid");
@@ -39,7 +39,7 @@ const isValidMortgageType = () => {
     }
 };
 
-form.addEventListener("click", function (e) {
+form.addEventListener("submit", function (e) {
     e.preventDefault();
     let isValid = true;
 
