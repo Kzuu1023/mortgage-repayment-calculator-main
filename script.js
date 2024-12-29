@@ -2,7 +2,9 @@ const mortgageAmount = document.getElementById("amount");
 const termYears = document.getElementById("term");
 const interestRate = document.getElementById("rate");
 const mortgageType = document.querySelectorAll("input[name='mortgage__type']");
-
+const amountError = document.querySelector(".currency__symbol");
+const yearsError = document.querySelector(".years-container");
+const rateError = document.querySelector(".rate__symbol");
 const form = document.getElementById("form");
 
 const setError = (input, message) => {
@@ -11,10 +13,10 @@ const setError = (input, message) => {
     if (!input.value) {
         errorMsg.textContent = message;
         errorMsg.style.color = "var(--red)";
+        input.parentElement.classList.add("invalid");
+        input.parentElement.classList.remove("valid");
+        input.parentElement.style.borderColor = "var(--red)";
     }
-    input.parentElement.classList.add("invalid");
-    input.parentElement.classList.remove("valid");
-    input.parentElement.style.borderColor = "var(--red)";
 };
 
 const setSuccess = (input) => {
@@ -23,10 +25,10 @@ const setSuccess = (input) => {
     if (input.value) {
         errorMsg.textContent = "";
         errorMsg.style.color = "";
+        input.parentElement.classList.add("valid");
+        input.parentElement.classList.remove("invalid");
+        input.parentElement.style.borderColor = "";
     }
-    input.parentElement.classList.add("valid");
-    input.parentElement.classList.remove("invalid");
-    input.parentElement.style.borderColor = "";
 };
 
 const isValidMortgageType = () => {
@@ -43,7 +45,11 @@ const isValidMortgageType = () => {
     if (!isChecked) {
         setError(mortgageType[0].parentElement, "This field is required");
     }
+
+    return false;
 };
+
+function calculate() {}
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -51,25 +57,34 @@ form.addEventListener("submit", function (e) {
 
     if (mortgageAmount.value) {
         setSuccess(mortgageAmount);
+        amountError.style.backgroundColor = "";
         isValid = true;
     } else {
         setError(mortgageAmount, "This field is required");
+        amountError.style.backgroundColor = "var(--red)";
+        amountError.firstElementChild.style.color = "var(--white)";
         isValid = false;
     }
 
     if (termYears.value) {
         setSuccess(termYears);
+        yearsError.style.backgroundColor = "";
         isValid = true;
     } else {
         setError(termYears, "This field is required");
+        yearsError.style.backgroundColor = "var(--red)";
+        yearsError.firstElementChild.style.color = "var(--white)";
         isValid = false;
     }
 
     if (interestRate.value) {
         setSuccess(interestRate);
+        rateError.style.backgroundColor = "";
         isValid = true;
     } else {
         setError(interestRate, "This field is required");
+        rateError.style.backgroundColor = "var(--red)";
+        rateError.firstElementChild.style.color = "var(--white)";
         isValid = false;
     }
 
