@@ -4,6 +4,7 @@
     --font-family-default: "Plus Jakarta Sans", sans-serif;
 
     --lime: hsl(61, 70%, 52%);
+    --lime-100: hsl(60, 100%, 94%);
     --red: hsl(4, 69%, 50%);
 
     --white: hsl(0, 0%, 100%);
@@ -40,6 +41,7 @@ body {
 }
 
 label {
+    width: 100%;
     display: block;
     color: var(--slate-700);
     font-size: var(--font-size-400);

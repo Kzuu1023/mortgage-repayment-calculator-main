@@ -11,57 +11,38 @@ const setError = (input, message) => {
     if (!input.value) {
         errorMsg.textContent = message;
         errorMsg.style.color = "var(--red)";
-        input.parentElement.classList.add("invalid");
-        input.parentElement.classList.remove("valid");
-        input.parentElement.style.borderColor = "var(--red)";
     }
+    input.parentElement.classList.add("invalid");
+    input.parentElement.classList.remove("valid");
+    input.parentElement.style.borderColor = "var(--red)";
 };
 
 const setSuccess = (input) => {
     const errorMsg = input.parentElement.nextElementSibling;
+
     if (input.value) {
         errorMsg.textContent = "";
         errorMsg.style.color = "";
-        input.parentElement.classList.add("valid");
-        input.parentElement.classList.remove("invalid");
-        input.parentElement.style.borderColor = "";
     }
+    input.parentElement.classList.add("valid");
+    input.parentElement.classList.remove("invalid");
+    input.parentElement.style.borderColor = "";
 };
 
 const isValidMortgageType = () => {
-    // for (const mortgageTypes of mortgageType) {
-    //     if (mortgageTypes.checked) {
-    //         setSuccess(mortgageTypes);
-    //         mortgageTypes.parentElement.style.borderColor = "var(--lime)";
-    //         mortgageTypes.parentElement.style.backgroundColor = "var(--lime)";
-    //         return true;
-    //     } else {
-    //         setError(mortgageTypes);
-    //         mortgageTypes.parentElement.style.borderColor = "";
-    //         return false;
-    //     }
-    // }
-
-    mortgageType.forEach((mortgageOptions) => {
-        if (mortgageOptions[0].checked || mortgageOptions[1].checked) {
-            setSuccess(mortgageOptions[0].parentElement.parentElement);
-            setSuccess(mortgageOptions[1].parentElement.parentElement);
-            mortgageOptions[0].parentElement.style.borderColor = "var(--lime)";
-            mortgageOptions[1].parentElement.style.borderColor = "var(--lime)";
-            return true;
-        } else {
-            setError(
-                mortgageOptions[0].parentElement.parentElement,
-                "Please select a query type"
-            );
-
-            setError(
-                mortgageOptions[1].parentElement.parentElement,
-                "Please select a query type"
-            );
-            return false;
+    let isChecked = false;
+    for (const types of mortgageType) {
+        if (types.checked) {
+            setSuccess(types.parentElement);
+            types.parentElement.style.borderColor = "var(--lime)";
+            types.parentElement.style.backgroundColor = "var(--lime-100)";
+            isChecked = true;
         }
-    });
+    }
+
+    if (!isChecked) {
+        setError(mortgageType[0].parentElement, "This field is required");
+    }
 };
 
 form.addEventListener("submit", function (e) {
