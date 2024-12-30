@@ -2,10 +2,10 @@ const mortgageAmount = document.getElementById("amount");
 const termYears = document.getElementById("term");
 const interestRate = document.getElementById("rate");
 const mortgageType = document.querySelectorAll("input[name='mortgage__type']");
-
 const amountError = document.querySelector(".currency__symbol");
 const yearsError = document.querySelector(".years-container");
 const rateError = document.querySelector(".rate__symbol");
+const clear = document.getElementById("clear");
 const form = document.getElementById("form");
 
 const setError = (input, message) => {
@@ -49,18 +49,19 @@ const setSuccess = (input) => {
 const isValidMortgageType = () => {
     let isChecked = false;
 
-    for (const types of mortgageType) {
-        if (types.checked) {
-            setSuccess(types.parentElement);
-            types.parentElement.style.borderColor = "var(--lime)";
-            types.parentElement.style.backgroundColor = "var(--lime-100)";
+    for (const type of mortgageType) {
+        if (type.checked) {
+            setSuccess(type.parentElement);
+            type.parentElement.style.borderColor = "var(--lime)";
+            type.parentElement.style.backgroundColor = "var(--lime-100)";
             isChecked = true;
         }
     }
 
-    if (!mortgageType.checked) {
+    if (!isChecked) {
         setError(mortgageType[0].parentElement, "This field is required");
     }
+
     return isChecked;
 };
 
@@ -71,16 +72,6 @@ const validateInputs = (input) => {
 };
 
 function formattedNumber() {
-    // input = input.replace(/[^\d.]/g, "");
-    // if (input.includes(".")) {
-    //     const [integerPart, decimalPart] = input.split(".");
-    //     input =
-    //         parseFloat(integerPart).toLocaleString("en") + "." + decimalPart;
-    // } else {
-    //     input = parseFloat(input).toLocaleString("en");
-    // }
-    // return input;
-
     const inputText = document.querySelectorAll("input[type='text']");
 
     inputText.forEach((input) => {
@@ -90,7 +81,7 @@ function formattedNumber() {
                 const removeChar = this.value.replace(/[^\d.]/g, "");
                 this.value = removeChar;
 
-                let formattedNum = this.value.replace(
+                let formattedNum = integerPart.replace(
                     /\B(?=(\d{3})+(?!\d))/g,
                     ","
                 );
@@ -109,7 +100,39 @@ function formattedNumber() {
     });
 }
 
+function calculate() {
+    let monthlyPayment = 0;
+    let totalpayments = 0;
+    const amount = parseFloat(document.getElementById("amount").value);
+    const rate = parseFloat(document.getElementById("rate").value) / 100;
+    const years = parseInt(document.getElementById("term").value);
+
+    if (mortgageType[0].checked) {
+        const monthlyRate = rate / 12;
+        const n = years * 12;
+        monthlyPayment =
+            (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n));
+
+        console.log(monthlyPayment.toFixed(5));
+    }
+}
+
+function clearAll() {
+    const input = document.querySelectorAll("input[type='text']");
+
+    clear.addEventListener("click", function () {
+        input.forEach((inputs) => {
+            inputs.value = "";
+        });
+
+        mortgageType.forEach((options) => {
+            options.checked = false;
+        });
+    });
+}
+
 formattedNumber();
+clearAll();
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -157,5 +180,9 @@ form.addEventListener("submit", function (e) {
         isValid = true;
     } else {
         isValid = false;
+    }
+
+    if (isValid) {
+        calculate();
     }
 });
