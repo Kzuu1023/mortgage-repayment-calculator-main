@@ -102,7 +102,7 @@ function formattedNumber() {
 
 function calculate() {
     let monthlyPayment = 0;
-    let totalpayments = 0;
+    let totalRepayment = 0;
     const amount = parseFloat(document.getElementById("amount").value);
     const rate = parseFloat(document.getElementById("rate").value) / 100;
     const years = parseInt(document.getElementById("term").value);
@@ -112,8 +112,11 @@ function calculate() {
         const n = years * 12;
         monthlyPayment =
             (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n));
-
         console.log(monthlyPayment.toFixed(5));
+    } else if (mortgageType[1].checked) {
+        monthlyPayment = (amount * rate) / 12;
+        totalRepayment = monthlyPayment * term * 12;
+        console.log(totalRepayment);
     }
 }
 
