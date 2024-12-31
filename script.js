@@ -56,17 +56,28 @@ function formattedNumber() {
 
     inputText.forEach((input) => {
         input.onkeyup = function () {
+            // const removeChar = this.value.replace(/[^\d.]/g, ""); // Remove non-numeric characters
+            // const [integerPart, decimalPart] = input.split(".");
+            // this.value = removeChar;
+            // let formattedNum = integerPart.replace(
+            //     /\B(?=(\d{3})+(?!\d))/g,
+            //     ","
+            // );
+
             if (this.value.includes(".")) {
-                const [integerPart, decimalPart] = input.split(".");
                 const removeChar = this.value.replace(/[^\d.]/g, "");
+                const [integerPart, decimalPart] = input.split(".");
                 this.value = removeChar;
                 let formattedNum = integerPart.replace(
                     /\B(?=(\d{3})+(?!\d))/g,
                     ","
                 );
-                this.value = `${formattedNum}.${decimalPart.slice(0, 2)}`; // Limit decimals to 2 places
-
                 this.value = formattedNum;
+                if (decimalPart) {
+                    this.value = `${formattedNum}.${decimalPart.slice(0, 2)}`; // Limit decimals to 2 places
+                } else {
+                    this.value = formattedNum;
+                }
             } else {
                 const removeChar = this.value.replace(/[^\d.]/g, "");
                 this.value = removeChar;
@@ -77,17 +88,12 @@ function formattedNumber() {
                 );
                 this.value = formattedNum;
             }
-            if (decimalPart) {
-                this.value = `${formattedNum}.${decimalPart.slice(0, 2)}`; // Limit decimals to 2 places
-            } else {
-                this.value = formattedNum;
-            }
         };
     });
 }
 
 function formatResult(value) {
-    const [integerPart, decimalPart] = value.toFixed(5).split(".");
+    const [integerPart, decimalPart] = value.toFixed(2).split(".");
     const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return `${formattedInteger}.${decimalPart}`;
 }
@@ -95,7 +101,9 @@ function formatResult(value) {
 function calculate() {
     let monthlyPayment = 0;
     let totalRepayment = 0;
-    const amount = parseFloat(document.getElementById("amount").value);
+    const amount = parseFloat(
+        document.getElementById("amount").value.replace(/,/g, "")
+    );
     const rate = parseFloat(document.getElementById("rate").value) / 100;
     const years = parseFloat(document.getElementById("term").value);
 
@@ -111,6 +119,7 @@ function calculate() {
             totalRepayment = monthlyPayment * years * 12;
         }
 
+        // Format and display results
         document.getElementById("monthly-result").innerText = `£${formatResult(
             monthlyPayment
         )}`;
@@ -134,6 +143,9 @@ function clearAll() {
         mortgageType.forEach((options) => {
             options.checked = false;
         });
+
+        document.querySelector(".show-results").style.display = "none";
+        document.querySelector(".results").style.display = "flex";
     });
 }
 
