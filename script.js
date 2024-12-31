@@ -7,6 +7,7 @@ const yearsError = document.querySelector(".years-container");
 const rateError = document.querySelector(".rate__symbol");
 const clear = document.getElementById("clear");
 const form = document.getElementById("form");
+let isValid = true;
 
 const setError = (input, message) => {
     const errorMsg = input.parentElement.nextElementSibling;
@@ -31,21 +32,6 @@ const setSuccess = (input) => {
     }
 };
 
-// const isValidMortgageType = () => {
-//     let isChecked = false;
-//     for (const types of mortgageType) {
-//         if (types.checked) {
-//             setSuccess(types.parentElement);
-//             types.parentElement.style.borderColor = "var(--lime)";
-//             types.parentElement.style.backgroundColor = "var(--lime-100)";
-//             isChecked = true;
-//         } else {
-//             setError(types.parentElement, "This field is required");
-//         }
-//     }
-//     return isChecked;
-// };
-
 const isValidMortgageType = () => {
     let isChecked = false;
 
@@ -65,12 +51,6 @@ const isValidMortgageType = () => {
     return isChecked;
 };
 
-const validateInputs = (input) => {
-    if (isNaN(input.value)) {
-        console.log("Please enter a valid number");
-    }
-};
-
 function formattedNumber() {
     const inputText = document.querySelectorAll("input[type='text']");
 
@@ -80,11 +60,12 @@ function formattedNumber() {
                 const [integerPart, decimalPart] = input.split(".");
                 const removeChar = this.value.replace(/[^\d.]/g, "");
                 this.value = removeChar;
-
                 let formattedNum = integerPart.replace(
                     /\B(?=(\d{3})+(?!\d))/g,
                     ","
                 );
+                this.value = `${formattedNum}.${decimalPart.slice(0, 2)}`; // Limit decimals to 2 places
+
                 this.value = formattedNum;
             } else {
                 const removeChar = this.value.replace(/[^\d.]/g, "");
@@ -96,8 +77,19 @@ function formattedNumber() {
                 );
                 this.value = formattedNum;
             }
+            if (decimalPart) {
+                this.value = `${formattedNum}.${decimalPart.slice(0, 2)}`; // Limit decimals to 2 places
+            } else {
+                this.value = formattedNum;
+            }
         };
     });
+}
+
+function formatResult(value) {
+    const [integerPart, decimalPart] = value.toFixed(5).split(".");
+    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return `${formattedInteger}.${decimalPart}`;
 }
 
 function calculate() {
@@ -105,18 +97,29 @@ function calculate() {
     let totalRepayment = 0;
     const amount = parseFloat(document.getElementById("amount").value);
     const rate = parseFloat(document.getElementById("rate").value) / 100;
-    const years = parseInt(document.getElementById("term").value);
+    const years = parseFloat(document.getElementById("term").value);
 
-    if (mortgageType[0].checked) {
-        const monthlyRate = rate / 12;
-        const n = years * 12;
-        monthlyPayment =
-            (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n));
-        console.log(monthlyPayment.toFixed(5));
-    } else if (mortgageType[1].checked) {
-        monthlyPayment = (amount * rate) / 12;
-        totalRepayment = monthlyPayment * term * 12;
-        console.log(totalRepayment);
+    if (isValid) {
+        if (mortgageType[0].checked) {
+            const monthlyRate = rate / 12;
+            const n = years * 12;
+            monthlyPayment =
+                (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n));
+            totalRepayment = monthlyPayment * n;
+        } else if (mortgageType[1].checked) {
+            monthlyPayment = (amount * rate) / 12;
+            totalRepayment = monthlyPayment * years * 12;
+        }
+
+        document.getElementById("monthly-result").innerText = `£${formatResult(
+            monthlyPayment
+        )}`;
+        document.getElementById("term-result").innerText = `£${formatResult(
+            totalRepayment
+        )}`;
+
+        document.querySelector(".show-results").style.display = "flex";
+        document.querySelector(".results").style.display = "none";
     }
 }
 
@@ -140,8 +143,6 @@ clearAll();
 form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    let isValid = true;
-
     if (mortgageAmount.value) {
         setSuccess(mortgageAmount);
         amountError.style.backgroundColor = "";
@@ -155,7 +156,6 @@ form.addEventListener("submit", function (e) {
     }
 
     if (termYears.value) {
-        validateInputs(termYears);
         setSuccess(termYears);
         yearsError.style.backgroundColor = "";
         yearsError.firstElementChild.style.color = "";
