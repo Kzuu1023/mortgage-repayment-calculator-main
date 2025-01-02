@@ -84,8 +84,9 @@ form input {
 }
 
 .mortgage__calculator {
-    max-width: 92%;
+    width: 90%;
     margin-top: 8rem;
+    margin-inline: 2rem;
     display: flex;
 }
 
@@ -227,8 +228,9 @@ form .header {
 } */
 
 .mortgage__second-row {
-    width: 70%;
+    width: 60%;
     background-color: var(--white);
+    border-radius: 1rem 1rem 1rem 0rem;
 }
 
 .mortgage__second-row .second__row-items {
