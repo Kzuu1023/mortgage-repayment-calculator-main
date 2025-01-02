@@ -79,13 +79,12 @@ form input {
 }
 
 .viewport {
-    /* margin-block: 8rem;
-    margin-inline: 16rem; */
     max-width: 1020px;
     margin: auto;
 }
 
 .mortgage__calculator {
+    max-width: 92%;
     margin-top: 8rem;
     display: flex;
 }
@@ -228,7 +227,7 @@ form .header {
 } */
 
 .mortgage__second-row {
-    width: 50%;
+    width: 70%;
     background-color: var(--white);
 }
 
@@ -276,14 +275,16 @@ form .header {
 }
 
 .show-results .results__heading p {
-    color: var(--slate-700);
-    margin-bottom: 1rem;
+    max-width: 95%;
+    color: var(--slate-300);
+    margin-bottom: 1.5rem;
 }
 
 .show-results .results__card {
     background-color: var(--slate-1000);
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 2rem 1.5rem;
     border-radius: 0.5rem;
+    border-top: 5px solid var(--lime);
 }
 
 .calculations .monthly {
@@ -319,20 +320,53 @@ form .header {
     color: hsl(228, 45%, 44%);
 } */
 
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 450px) {
     .mortgage__calculator {
-        display: flex;
-        flex-direction: row;
+        align-items: center;
+        flex-direction: column;
+        margin: 0;
     }
 
     form .header {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .mortgage__calculator form {
+        width: 100%;
+        border-radius: 0rem;
+    }
+
+    .mortgage__calculator .mortgage__card {
+        width: 100%;
+    }
+
+    .mortgage__first-row {
+        max-width: 70%;
     }
 
     .mortgage__calculator .mortgage {
-        width: 100%;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+    }
+
+    .mortgage__second-row {
+        width: 70%;
+    }
+
+    .mortgage__second-row .second__row-items {
+        display: flex;
+        background-color: var(--slate-900);
+        border-radius: 0rem;
+    }
+
+    .second__row-items .results {
+        margin-block: 2rem;
+    }
+
+    .submit__container button {
+        width: 100%;
     }
 }

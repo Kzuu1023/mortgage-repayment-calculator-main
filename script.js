@@ -35,19 +35,20 @@ const setSuccess = (input) => {
 const isValidMortgageType = () => {
     let isChecked = false;
 
-    for (const type of mortgageType) {
+    mortgageType.forEach((type) => {
         if (type.checked) {
             setSuccess(type.parentElement);
             type.parentElement.style.borderColor = "var(--lime)";
             type.parentElement.style.backgroundColor = "var(--lime-100)";
             isChecked = true;
         }
-    }
+    });
 
     if (!isChecked) {
-        setError(mortgageType[0].parentElement, "This field is required");
+        mortgageType.forEach((type) => {
+            setError(type.parentElement, "This field is required");
+        });
     }
-
     return isChecked;
 };
 
@@ -56,14 +57,6 @@ function formattedNumber() {
 
     inputText.forEach((input) => {
         input.onkeyup = function () {
-            // const removeChar = this.value.replace(/[^\d.]/g, ""); // Remove non-numeric characters
-            // const [integerPart, decimalPart] = input.split(".");
-            // this.value = removeChar;
-            // let formattedNum = integerPart.replace(
-            //     /\B(?=(\d{3})+(?!\d))/g,
-            //     ","
-            // );
-
             if (this.value.includes(".")) {
                 const removeChar = this.value.replace(/[^\d.]/g, "");
                 const [integerPart, decimalPart] = input.split(".");
@@ -142,6 +135,8 @@ function clearAll() {
 
         mortgageType.forEach((options) => {
             options.checked = false;
+            options.parentElement.style.borderColor = "var(--slate-700)";
+            options.parentElement.style.backgroundColor = "var(--white)";
         });
 
         document.querySelector(".show-results").style.display = "none";
